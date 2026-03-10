@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>KNOCK ONCE — Horror Text Adventure</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="grain"></div>
+
+  <!--  AUDIO ENGINE -->
+  <audio id="aud-knock"   src="sfx-knock.mp3"   preload="auto"></audio>
+  <audio id="aud-ambient" src="sfx-ambient.mp3"  preload="auto"></audio>
+  <audio id="aud-pad"     src="sfx-pad.mp3"      preload="auto"></audio>
+  <audio id="aud-scream"  src="sfx-scream.mp3"   preload="auto"></audio>
+
+  <!-- ══ LANDING ══ -->
+  <div id="screen-landing" class="gscreen active">
+    <div class="master-frame">
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <aside class="sidebar">
+        <button class="sb-btn" onclick="showLeaderboard()" title="Archive">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="1"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        </button>
+        <button class="sb-btn sb-audio" id="audio-btn" onclick="toggleAudio()" title="Toggle Audio">
+          <svg id="ico-sound-on" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <svg id="ico-sound-off" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        </button>
+      </aside>
+      <div class="inner">
+        <div class="landing-wrap">
+          <h1 class="main-title">KNOCK<br>ONCE</h1>
+          <p class="tagline">A horror text adventure. One apartment. One night.<br>Three knocks. Wrong choices.</p>
+
+          <div class="name-row mt-5">
+            <div class="name-field half">
+              <label class="nano-label" for="playerFirst">FIRST NAME</label>
+              <input id="playerFirst" class="name-input" type="text" placeholder="Priya" maxlength="15" autocomplete="given-name">
+            </div>
+            <div class="name-field half">
+              <label class="nano-label" for="playerLast">LAST NAME</label>
+              <input id="playerLast" class="name-input" type="text" placeholder="Sharma" maxlength="20" autocomplete="family-name">
+            </div>
+          </div>
+
+          <button class="pill-btn mt-5" onclick="startGame()">
+            <span class="pb-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </span>
+            <span class="pb-text">BEGIN THE NIGHTMARE</span>
+          </button>
+          <p class="warn-text mt-5">WARNING: PSYCHOLOGICAL HORROR &middot; PLAY ALONE &middot; LIGHTS OFF</p>
+        </div>
+      </div>
+      <div class="frame-footer">
+        <span class="footer-l">Created by <strong>Raj Rasal</strong> &nbsp;&middot;&nbsp; Inspired by <a href="https://scope-creep.xyz/play" target="_blank" class="footer-link">scope&#8209;creep.xyz</a></span>
+        <span class="footer-r">v3.0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER SPLASH -->
+  <div id="screen-chapter" class="gscreen">
+    <div class="chapter-splash">
+      <div class="evil-eye-bg">
+        <img src="evil-eye.png" alt="" class="evil-eye-img" id="evil-eye-img">
+      </div>
+      <div class="chapter-text-center">
+        <p class="ch-number" id="ch-number">CHAPTER I</p>
+        <p class="ch-feel"   id="ch-feel">YOU FEEL <strong>NORMAL</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GAME SCREEN ══ -->
+  <div id="screen-game" class="gscreen">
+    <div class="master-frame">
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <aside class="sidebar">
+        <button class="sb-btn" onclick="goLanding()" title="Menu">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+        <button class="sb-btn" onclick="toggleAudio()" title="Audio">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        </button>
+      </aside>
+      <div class="inner">
+        <div class="game-chapter-badge">
+          <span class="deco-diamond sm"></span>
+          <span id="game-ch-text">CHAPTER I</span>
+          <span class="deco-diamond sm"></span>
+        </div>
+        <div class="hud-stat-row">
+          <div class="hud-stat left-stat">
+            <span class="hud-lbl">DREAD</span>
+            <div class="hud-track"><div class="hud-fill dread-fill" id="dread-fill"></div></div>
+            <span class="hud-num" id="dread-num">10</span>
+          </div>
+          <div class="hud-center-gem">
+            <div class="gem-hex" id="gem-hex">
+              <!-- SVG eye icon -->
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="hud-stat right-stat">
+            <span class="hud-num" id="safety-num">50</span>
+            <div class="hud-track"><div class="hud-fill safety-fill" id="safety-fill"></div></div>
+            <span class="hud-lbl">SAFETY</span>
+          </div>
+        </div>
+        <div class="story-zone">
+          <div class="story-header-row">
+            <div class="sh-line"></div>
+            <div class="sh-deco">
+              <span class="deco-diamond"></span>
+              <p class="sh-eyebrow" id="scene-eyebrow">YOUR APARTMENT</p>
+              <h2 class="sh-title" id="scene-title">11:00 PM</h2>
+              <span class="deco-diamond"></span>
+            </div>
+            <div class="sh-line"></div>
+          </div>
+          <div class="prose-scroll">
+            <p class="story-prose" id="story-prose"></p>
+          </div>
+          <div class="action-zone" id="action-zone" style="display:none;">
+            <p class="action-prompt">WHAT DO YOU DO?</p>
+            <div class="chevron-bounce">&#8964;</div>
+            <button class="pill-btn" onclick="showChoices()">
+              <span class="pb-icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </span>
+              <span class="pb-text">DRAW CARDS</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="frame-footer">
+        <span class="footer-l">Created by <strong>Raj Rasal</strong> &nbsp;&middot;&nbsp; Inspired by <a href="https://scope-creep.xyz/play" target="_blank" class="footer-link">scope&#8209;creep.xyz</a></span>
+        <span class="footer-r">v3.0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHOICES SCREEN -->
+  <div id="screen-choices" class="gscreen">
+    <div class="master-frame choices-mf">
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <div class="timer-strip">
+        <div class="timer-track left-track"><div class="timer-fill tf-left" id="tf-left" style="width:100%"></div></div>
+        <div class="timer-badge-pill">
+          <span class="deco-diamond sm"></span>
+          <span class="timer-val" id="timer-val">00:30</span>
+          <span class="deco-diamond sm"></span>
+        </div>
+        <div class="timer-track right-track"><div class="timer-fill tf-right" id="tf-right" style="width:100%"></div></div>
+      </div>
+      <div class="inner choices-inner">
+        <p class="choose-prompt">CHOOSE AN OPTION</p>
+        <div class="cards-deck" id="cards-deck"></div>
+      </div>
+      <div class="frame-footer">
+        <span class="footer-l">Created by <strong>Raj Rasal</strong></span>
+        <span class="footer-r">v3.0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CONSEQUENCE SCREEN ══ -->
+  <div id="screen-consequence" class="gscreen">
+    <div class="master-frame consequence-mf">
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <div class="consequence-top-labels">
+        <div class="cseq-label-pill">
+          <span class="deco-diamond sm"></span><span>THE OUTCOME</span><span class="deco-diamond sm"></span>
+        </div>
+        <div class="cseq-label-pill">
+          <span class="deco-diamond sm"></span><span>YOU SELECTED&hellip;</span><span class="deco-diamond sm"></span>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <button class="sb-btn" onclick="goLanding()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+      </aside>
+      <div class="cseq-body">
+        <div class="cseq-left">
+          <div class="cseq-icon-row">
+            <div class="cseq-divline"></div>
+            <div class="cseq-hexicon" id="cseq-hexicon"></div><!-- filled by JS with SVG -->
+            <div class="cseq-divline"></div>
+          </div>
+          <h3 class="cseq-title" id="cseq-title">THE OUTCOME</h3>
+          <p class="cseq-prose"   id="cseq-prose"></p>
+          <p class="cseq-flavour" id="cseq-flavour"></p>
+          <p class="cseq-delta"   id="cseq-delta"></p>
+          <button class="pill-btn mt-5" onclick="continueStory()">
+            <span class="pb-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+            <span class="pb-text">CONTINUE</span>
+          </button>
+        </div>
+        <div class="cseq-right">
+          <div class="display-card-holder" id="display-card-holder"></div>
+        </div>
+      </div>
+      <div class="frame-footer">
+        <span class="footer-l">Created by <strong>Raj Rasal</strong></span>
+        <span class="footer-r">v3.0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENDING SCREEN -->
+  <div id="screen-ending" class="gscreen">
+    <div class="master-frame">
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <div class="inner">
+        <div class="ending-wrap">
+          <div class="stamp-zone">
+            <div class="case-stamp" id="case-stamp">CASE CLOSED</div>
+          </div>
+          <h2 class="ending-verdict" id="ending-verdict">SURVIVED</h2>
+          <div class="ending-rule" id="ending-rule"></div>
+          <p class="ending-sub"   id="ending-sub">You trusted your instincts.</p>
+          <p class="ending-prose" id="ending-prose"></p>
+          <div class="score-box mt-5">
+            <span class="score-label">FINAL SCORE</span>
+            <span class="score-num" id="final-score">0</span>
+          </div>
+          <div class="d-flex gap-3 justify-content-center flex-wrap mt-4">
+            <button class="pill-btn" onclick="restartGame()">
+              <span class="pb-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+              </span>
+              <span class="pb-text">PLAY AGAIN</span>
+            </button>
+            <button class="ghost-btn" onclick="showLeaderboard()">VIEW ARCHIVE</button>
+          </div>
+        </div>
+      </div>
+      <div class="frame-footer">
+        <span class="footer-l">Created by <strong>Raj Rasal</strong> &nbsp;&middot;&nbsp; Inspired by <a href="https://scope-creep.xyz/play" target="_blank" class="footer-link">scope&#8209;creep.xyz</a></span>
+        <span class="footer-r">v3.0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div id="screen-leaderboard" class="gscreen">
+    <div class="master-frame">
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <aside class="sidebar">
+        <button class="sb-btn" onclick="goLanding()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+      </aside>
+      <div class="inner">
+        <div class="lb-wrap">
+          <p class="pre-title">INCIDENT ARCHIVE</p>
+          <h2 class="lb-title">THE ARCHIVE</h2>
+          <div class="lb-rule"></div>
+          <table class="lb-table">
+            <thead>
+              <tr><th>SUBJECT</th><th>OUTCOME</th><th>SCORE</th><th>LAST ACTION</th></tr>
+            </thead>
+            <tbody id="lb-body">
+              <tr><td colspan="4" class="lb-empty">No cases on file yet.</td></tr>
+            </tbody>
+          </table>
+          <div class="text-center mt-5">
+            <button class="ghost-btn" onclick="goLanding()">← RETURN</button>
+          </div>
+        </div>
+      </div>
+      <div class="frame-footer">
+        <span class="footer-l">Created by <strong>Raj Rasal</strong></span>
+        <span class="footer-r">v3.0</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
