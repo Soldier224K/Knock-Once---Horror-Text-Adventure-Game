@@ -65,13 +65,8 @@ Most of them are not good.
 
 | | |
 |:---:|:---:|
-| ![Landing screen — KNOCK ONCE title with name input](https://github.com/user-attachments/assets/landing) | ![Tarot card choice screen with 30s timer](https://github.com/user-attachments/assets/choices) |
-| *You enter your name. It will be used against you.* | *You have 30 seconds. The cards are waiting.* |
-| ![Consequence screen — Watchman Kiran](https://github.com/user-attachments/assets/consequence) | ![Game screen — Chapter II 11:12 PM typewriter](https://github.com/user-attachments/assets/game) |
-| *Something climbed up.* | *The story types itself. Character by character.* |
-| ![Chapter splash — evil eye background, YOU FEEL NORMAL](https://github.com/user-attachments/assets/chapter) | ![Leaderboard — THE ARCHIVE, Raj Rasal SURVIVED 291](https://github.com/user-attachments/assets/archive) |
-| *Chapter I. You feel normal. That changes.* | *THE ARCHIVE. Your record lives here. Permanently.* |
-
+| <img width="1469" height="831" alt="Screenshot 2026-03-11 at 5 17 18 PM" src="https://github.com/user-attachments/assets/b1b23a90-1b80-4650-850f-ddf7a549597a" />
+ 
 </div>
 
 > **To add screenshots:** replace the placeholder asset URLs above with your actual uploaded image URLs from GitHub after pushing this repo.  
