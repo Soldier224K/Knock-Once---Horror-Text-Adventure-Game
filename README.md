@@ -69,8 +69,7 @@ Most of them are not good.
  
 </div>
 
-> **To add screenshots:** replace the placeholder asset URLs above with your actual uploaded image URLs from GitHub after pushing this repo.  
-> Path: `docs/screenshots/` → drag images into the GitHub UI → copy the CDN links → paste above.
+
 
 ---
 
