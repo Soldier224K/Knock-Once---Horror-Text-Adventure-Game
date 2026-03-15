@@ -188,7 +188,7 @@ Open `index.html`. That is the entire installation process.
 ## ❯ RUN LOCALLY
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/knock-once.git
+git clone https://github.com/Soldier224K/Knock-Once---Horror-Text-Adventure-Game.git
 cd knock-once
 open index.html
 ```
